@@ -8,7 +8,8 @@ class MyAppBodyPage extends StatefulWidget {
 }
 
 class _MyAppBodyPageState extends State<MyAppBodyPage> {
-  double _currentSliderValue = 75;
+  // double _currentSliderValue = 75;
+  double _value = 0.7;
 
   // double spicy = 0.6;
   int quantity = 1;
@@ -65,176 +66,169 @@ class _MyAppBodyPageState extends State<MyAppBodyPage> {
             ),
             SizedBox(height: 30),
 
-            // Row(
-            //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     // 🌶️ Spicy (50%)
-            //     Expanded(
-            //       child: Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Text("Spicy", style: TextStyle(fontWeight: FontWeight.bold)),
-            //
-            //           Slider(
-            //               value: _currentSliderValue,
-            //               // min: 0,
-            //               max: 100,
-            //               divisions: 100,
-            //               label: _currentSliderValue.round().toString(),
-            //               activeColor: Colors.red,
-            //               inactiveColor: Colors.grey.shade300,
-            //               onChanged: (double value) {
-            //                 setState(() {
-            //                   _currentSliderValue = value;
-            //                 });
-            //               }
-            //           ),
-            //
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             children: [
-            //               Text("Mild", style: TextStyle(color: Colors.green, fontWeight: FontWeight.w500)),
-            //               Text("Hot", style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500)),
-            //             ],
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //
-            //     SizedBox(width: 10),
-            //
-            //     // 🍔 Portion (50%)
-            //     Expanded(
-            //       child: Column(
-            //         // crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //           Text("Portion", style: TextStyle(fontWeight: FontWeight.bold)),
-            //
-            //           SizedBox(height: 10),
-            //
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.end,
-            //             children: [
-            //               IconButton(
-            //                 onPressed: () {
-            //                   if (quantity > 1) {
-            //                     setState(() => quantity--);
-            //                   }
-            //                 },
-            //                 icon: Icon(Icons.remove, color: Colors.white),
-            //                 style: IconButton.styleFrom(
-            //                   backgroundColor: Colors.red,
-            //                   shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(9)),
-            //                 ),
-            //               ),
-            //
-            //               SizedBox(width: 10),
-            //
-            //               Text("$quantity", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-            //
-            //               SizedBox(width: 10),
-            //
-            //               IconButton(
-            //                 onPressed: () {
-            //                   setState(() => quantity++);
-            //                 },
-            //                 icon: Icon(Icons.add, color: Colors.white),
-            //                 style: IconButton.styleFrom(
-            //                   backgroundColor: Colors.red,
-            //                   shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(9)),
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
             Row(
               children: [
-                // 🌶️ Spicy Slider
                 Expanded(
+                  flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Spicy", style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text("Spicy", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const SizedBox(height: 8),
 
-                      SizedBox(
-                        width: double.infinity,
-                        child: Slider(
-                          value: _currentSliderValue,
-                          min: 0,
-                          max: 100,
-                          divisions: 100,
-                          label: _currentSliderValue.round().toString(),
-                          activeColor: Colors.red,
-                          inactiveColor: Colors.grey.shade300,
-                          onChanged: (double value) {
-                            setState(() {
-                              _currentSliderValue = value;
-                            });
-                          },
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          trackHeight: 6,
+                          trackShape: const _CustomTrackShape(),
+                          activeTrackColor: const Color(0xFFFF3548),
+                          inactiveTrackColor: const Color(0xFFF3F3F3),
+                          thumbShape: const _SquareSliderThumbShape(),
+                          overlayShape: SliderComponentShape.noOverlay,
                         ),
+                        child: Slider(value: _value, onChanged: (val) => setState(() => _value = val)),
                       ),
 
+                      const SizedBox(height: 8),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Mild", style: TextStyle(color: Colors.green, fontWeight: FontWeight.w500)),
-                          Text("Hot", style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500)),
+                        children: const [
+                          Text(
+                            "Mild",
+                            style: TextStyle(color: Colors.green, fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Hot",
+                            style: TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
 
-                // SizedBox(width: 10),
+                const SizedBox(width: 40),
 
-                // 🍔 Portion
                 Expanded(
+                  flex: 3,
                   child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("Portion", style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
+                      const Text("Portion", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              if (quantity > 1) setState(() => quantity--);
-                            },
-                            icon: Icon(Icons.remove, color: Colors.white),
-                            style: IconButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(9),
-                              ),
-                            ),
+                          _buildBtn(Icons.remove),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12),
+                            child: Text("1", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
-                          SizedBox(width: 10),
-                          Text("$quantity", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
-                          SizedBox(width: 10),
-                          IconButton(
-                            onPressed: () => setState(() => quantity++),
-                            icon: Icon(Icons.add, color: Colors.white),
-                            style: IconButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(9),
-                              ),
-                            ),
-                          ),
+                          _buildBtn(Icons.add),
                         ],
                       ),
                     ],
                   ),
                 ),
               ],
-            )
+            ),
+            const SizedBox(height: 30),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 18),
+                  decoration: BoxDecoration(color: const Color(0xFFFF3548), borderRadius: BorderRadius.circular(18)),
+                  child: const Text(
+                    "\$9.99",
+                    style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(color: const Color(0xFF352D2B), borderRadius: BorderRadius.circular(18)),
+                    child: const Center(
+                      child: Text(
+                        "ORDER NOW",
+                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
+  }
+}
+
+Widget _buildBtn(IconData icon) {
+  return Container(
+    padding: const EdgeInsets.all(6),
+    decoration: BoxDecoration(
+      color: const Color(0xFFFF3548),
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: [BoxShadow(color: Colors.red.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 5))],
+    ),
+    child: Icon(icon, color: Colors.white, size: 24),
+  );
+}
+
+class _SquareSliderThumbShape extends SliderComponentShape {
+  const _SquareSliderThumbShape();
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) => const Size(14, 24);
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
+    final Canvas canvas = context.canvas;
+
+    final paintWhite = Paint()..color = Colors.white;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(Rect.fromCenter(center: center, width: 21, height: 24), const Radius.circular(4)),
+      paintWhite,
+    );
+
+    final paintRed = Paint()..color = const Color(0xFFFF3548);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(Rect.fromCenter(center: center, width: 12, height: 17), const Radius.circular(3)),
+      paintRed,
+    );
+  }
+}
+
+class _CustomTrackShape extends RoundedRectSliderTrackShape {
+  const _CustomTrackShape();
+
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double trackHeight = sliderTheme.trackHeight!;
+    final double trackLeft = offset.dx;
+    final double trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2;
+    final double trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
