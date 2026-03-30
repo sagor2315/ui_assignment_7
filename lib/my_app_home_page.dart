@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ui_assignment_7/MyAppBodyPage.dart';
+import 'package:ui_assignment_7/my_app-body_page.dart';
 
 class MyAppHomePage extends StatefulWidget {
   const MyAppHomePage({super.key});

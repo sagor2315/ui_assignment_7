@@ -13,9 +13,13 @@ class _MyAppBodyPageState extends State<MyAppBodyPage> {
 
   // double spicy = 0.6;
   int quantity = 1;
+  int _quantity = 1;
+  final double _basePrice = 9.99;
+  double get _totalPrice => _basePrice * _quantity;
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Padding(
         padding: EdgeInsetsGeometry.symmetric(horizontal: 20),
@@ -118,12 +122,22 @@ class _MyAppBodyPageState extends State<MyAppBodyPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          _buildBtn(Icons.remove),
-                          const Padding(
+                          _buildBtn(Icons.remove, () {
+                            if (_quantity > 1) {
+                              setState(() {
+                                _quantity--;
+                              });
+                            }
+                          }, isEnabled: _quantity > 0),
+                          Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12),
-                            child: Text("1", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            child: Text("$_quantity", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           ),
-                          _buildBtn(Icons.add),
+                          _buildBtn(Icons.add, () {
+                            setState(() {
+                              _quantity++;
+                            });
+                          }),
                         ],
                       ),
                     ],
@@ -137,8 +151,8 @@ class _MyAppBodyPageState extends State<MyAppBodyPage> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 18),
                   decoration: BoxDecoration(color: const Color(0xFFFF3548), borderRadius: BorderRadius.circular(18)),
-                  child: const Text(
-                    "\$9.99",
+                  child:  Text(
+                    "\$${_totalPrice.toStringAsFixed(2)}",
                     style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -165,15 +179,18 @@ class _MyAppBodyPageState extends State<MyAppBodyPage> {
   }
 }
 
-Widget _buildBtn(IconData icon) {
-  return Container(
-    padding: const EdgeInsets.all(6),
-    decoration: BoxDecoration(
-      color: const Color(0xFFFF3548),
-      borderRadius: BorderRadius.circular(10),
-      boxShadow: [BoxShadow(color: Colors.red.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 5))],
+Widget _buildBtn(IconData icon, VoidCallback onPressed, {bool isEnabled = true}) {
+  return GestureDetector(
+    onTap: isEnabled ? onPressed : null,
+    child: Container(
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFF3548),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [BoxShadow(color: Colors.red.withValues(alpha: 0.2), blurRadius: 10, offset: const Offset(0, 5))],
+      ),
+      child: Icon(icon, color: Colors.white, size: 24),
     ),
-    child: Icon(icon, color: Colors.white, size: 24),
   );
 }
 
