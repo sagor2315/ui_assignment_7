@@ -158,16 +158,55 @@ class _MyAppBodyPageState extends State<MyAppBodyPage> {
                 ),
                 const SizedBox(width: 15),
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    decoration: BoxDecoration(color: const Color(0xFF352D2B), borderRadius: BorderRadius.circular(18)),
-                    child: const Center(
-                      child: Text(
-                        "ORDER NOW",
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1),
+                  child: GestureDetector(
+                    onTap: (){
+                      if(_quantity > 0){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text(
+                                  "successfully ordered $_quantity Barger(s)!",
+                                style: const TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              backgroundColor: Color(0xFF2E7D32),
+                              duration: const Duration(seconds: 2),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadiusGeometry.circular(10),
+                              ),
+                            margin: const EdgeInsets.all(16),
+                          ),
+                        );
+
+                        setState(() {
+                          _quantity = 0;
+                        });
+                      }
+                      else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Please add some barger first!",
+                              style: const TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                            margin: const EdgeInsets.all(16),
+                          )
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(color: const Color(0xFF352D2B), borderRadius: BorderRadius.circular(18)),
+                      child: const Center(
+                        child: Text(
+                          "ORDER NOW",
+                          style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold, letterSpacing: 1),
+                        ),
                       ),
                     ),
-                  ),
+                  )
                 ),
               ],
             ),
